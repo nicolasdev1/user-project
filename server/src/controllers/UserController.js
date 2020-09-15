@@ -2,8 +2,8 @@
 const user = require('../models/user');
 const status = require('http-status');
 
-// cria o metodo insert, obtendo os dados da request
-exports.insert = (req, res, next) => {
+// cria o metodo create, obtendo os dados da request
+exports.create = (req, res, next) => {
   const name = req.body.name;
   const salary = req.body.salary;
   const dateBirth = req.body.dateBirth;
