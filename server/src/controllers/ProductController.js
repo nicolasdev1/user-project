@@ -34,3 +34,27 @@ exports.create = (req, res, next) => {
     // catch = registra o que queremos que aconteça quando a promise falhar
     .catch(err => next(err));
 };
+
+exports.index = (req, res, next) => {
+  product.findAll()
+    .then(product => {
+      if (product) {
+        res.status(status.OK).send(product);
+      }
+    })
+    .catch(err => next(err));
+};
+
+exports.indexDetail = (req, res, next) => {
+  const id = req.params.id;
+
+  product.findByPk(id)
+    .then(product => {
+      if (product) {
+        res.status(status.OK).send(product);
+      } else {
+        res.status(status.NOT_FOUND).send();
+      }
+    })
+    .catch(err => next(err));
+};
