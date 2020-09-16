@@ -9,21 +9,21 @@ const product = sequelize.define('product', {
     primaryKey: true,
     type: Sequelize.INTEGER,
   },
-  productName: {
+  product_name: {
     allowNull: false,
     type: Sequelize.STRING(150),
     validate: {
       len: [3, 150]
     },
   },
-  productCategory: {
+  product_category: {
     allowNull: false,
     type: Sequelize.STRING(50),
     validate: {
       len: [3, 50]
     },
   },
-  productStatus: {
+  product_status: {
     allowNull: false,
     type: Sequelize.STRING(9),
     validate: {

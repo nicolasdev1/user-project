@@ -26,7 +26,7 @@ const user = sequelize.define('user', {
       len: [1, 999999]
     },
   },
-  dateBirth: {
+  date_birth: {
     allowNull: false,
     type: Sequelize.DATE(),
   },

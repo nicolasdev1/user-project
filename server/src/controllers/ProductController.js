@@ -4,19 +4,19 @@ const status = require('http-status');
 
 // cria o metodo create, obtendo os dados da request
 exports.create = (req, res, next) => {
-  const productName = req.body.productName;
-  const productCategory = req.body.productCategory;
+  const product_name = req.body.product_name;
+  const product_category = req.body.product_category;
   // define se o produto é novo ou usado
-  const productStatus = req.body.productStatus;
+  const product_status = req.body.product_status;
   const color = req.body.color;
   const price = req.body.price;
   const stock = req.body.stock;
   
   // popula cada um dos campos do model com os campos recebidos na request
   product.create({
-    productName: productName,
-    productCategory: productCategory,
-    productStatus: productStatus,
+    product_name: product_name,
+    product_category: product_category,
+    product_status: product_status,
     color: color,
     price: price,
     stock: stock,
@@ -45,7 +45,7 @@ exports.index = (req, res, next) => {
     .catch(err => next(err));
 };
 
-exports.indexDetail = (req, res, next) => {
+exports.show = (req, res, next) => {
   const id = req.params.id;
 
   product.findByPk(id)
@@ -54,6 +54,59 @@ exports.indexDetail = (req, res, next) => {
         res.status(status.OK).send(product);
       } else {
         res.status(status.NOT_FOUND).send();
+      }
+    })
+    .catch(err => next(err));
+};
+
+exports.update = (req, res, next) => {
+  const id = req.params.id;
+
+  const product_name = req.body.product_name;
+  const product_category = req.body.product_category;
+  const product_status = req.body.product_status;
+  const color = req.body.color;
+  const price = req.body.price;
+  const stock = req.body.stock;
+
+  product.findByPk(id)
+    .then(product => {
+      if (product) {
+        product.update({
+          product_name: product_name,
+          product_category: product_category,
+          product_status: product_status,
+          color: color,
+          price: price,
+          stock: stock,
+        },
+        { where: { id: id } })
+        .then(() => {
+          res.status(status.OK).send('Produto atualizado com sucesso!');
+        })
+        .catch(err => next(err));
+      } else {
+        res.status(status.NOT_FOUND).send('Erro inesperado ao atualizar o produto.');
+      }
+    })
+    .catch(err => next(err));
+};
+
+exports.delete = (req, res, next) => {
+  const id = req.params.id;
+
+  product.findByPk(id)
+    .then(product => {
+      if (product) {
+        product.destroy({
+          where: { id: id }
+        })
+        .then(() => {
+          res.status(status.OK).send('Produto deletado com sucesso!');
+        })
+        .catch(err => next(err));
+      } else {
+        res.status(status.NOT_FOUND).send('Erro inesperado ao deletar o produto.');
       }
     })
     .catch(err => next(err));

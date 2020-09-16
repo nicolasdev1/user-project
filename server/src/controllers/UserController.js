@@ -6,14 +6,14 @@ const status = require('http-status');
 exports.create = (req, res, next) => {
   const name = req.body.name;
   const salary = req.body.salary;
-  const dateBirth = req.body.dateBirth;
+  const date_birth = req.body.date_birth;
   const active = req.body.active;
 
   // popula cada um dos campos do model com os campos recebidos na request
   user.create({
     name: name,
     salary: salary,
-    dateBirth: dateBirth,
+    date_birth: date_birth,
     active: active,
   })
 
@@ -38,9 +38,9 @@ exports.index = (req, res, next) => {
       }
     })
     .catch(err => next(err));
-}
+};
 
-exports.indexDetail = (req, res, next) => {
+exports.show = (req, res, next) => {
   const id = req.params.id;
 
   user.findByPk(id)
@@ -49,6 +49,55 @@ exports.indexDetail = (req, res, next) => {
         res.status(status.OK).send(user);
       } else {
         res.status(status.NOT_FOUND).send();
+      }
+    })
+    .catch(err => next(err));
+};
+
+exports.update = (req, res, next) => {
+  const id = req.params.id;
+
+  const name = req.body.name;
+  const salary = req.body.salary;
+  const date_birth = req.body.date_birth;
+  const active = req.body.active;
+
+  user.findByPk(id)
+    .then(user => {
+      if (user) {
+        user.update({
+          name: name,
+          salary: salary,
+          date_birth: date_birth,
+          active: active,
+        },
+        { where: { id: id } })
+        .then(() => {
+          res.status(status.OK).send('Usuário atualizado com sucesso!');
+        })
+        .catch(err => next(err));
+      } else {
+        res.status(status.NOT_FOUND).send('Erro inesperado ao atualizar o usuário.');
+      }
+    })
+    .catch(err => next(err));
+};
+
+exports.delete = (req, res, next) => {
+  const id = req.params.id;
+
+  user.findByPk(id)
+    .then(user => {
+      if (user) {
+        user.destroy({
+          where: { id: id }
+        })
+        .then(() => {
+          res.status(status.OK).send('Usuário deletado com sucesso!');
+        })
+        .catch(err => next(err));
+      } else {
+        res.status(status.NOT_FOUND).send('Erro inesperado ao deletar o usuário.');
       }
     })
     .catch(err => next(err));
