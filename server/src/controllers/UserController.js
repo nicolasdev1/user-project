@@ -4,10 +4,12 @@ const status = require('http-status');
 
 // cria o metodo create, obtendo os dados da request
 exports.create = (req, res, next) => {
-  const name = req.body.name;
-  const salary = req.body.salary;
-  const date_birth = req.body.date_birth;
-  const active = req.body.active;
+  const {
+    name,
+    salary,
+    date_birth,
+    active
+  } = req.body;
 
   // popula cada um dos campos do model com os campos recebidos na request
   user.create({
@@ -57,10 +59,12 @@ exports.show = (req, res, next) => {
 exports.update = (req, res, next) => {
   const id = req.params.id;
 
-  const name = req.body.name;
-  const salary = req.body.salary;
-  const date_birth = req.body.date_birth;
-  const active = req.body.active;
+  const {
+    name,
+    salary,
+    date_birth,
+    active
+  } = req.body;
 
   user.findByPk(id)
     .then(user => {

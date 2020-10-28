@@ -4,13 +4,14 @@ const status = require('http-status');
 
 // cria o metodo create, obtendo os dados da request
 exports.create = (req, res, next) => {
-  const product_name = req.body.product_name;
-  const product_category = req.body.product_category;
-  // define se o produto é novo ou usado
-  const product_status = req.body.product_status;
-  const color = req.body.color;
-  const price = req.body.price;
-  const stock = req.body.stock;
+  const {
+    product_name,
+    product_category,
+    product_status,
+    color,
+    price,
+    stock
+  } = req.body;
   
   // popula cada um dos campos do model com os campos recebidos na request
   product.create({
@@ -62,12 +63,14 @@ exports.show = (req, res, next) => {
 exports.update = (req, res, next) => {
   const id = req.params.id;
 
-  const product_name = req.body.product_name;
-  const product_category = req.body.product_category;
-  const product_status = req.body.product_status;
-  const color = req.body.color;
-  const price = req.body.price;
-  const stock = req.body.stock;
+  const {
+    product_name,
+    product_category,
+    product_status,
+    color,
+    price,
+    stock
+  } = req.body;
 
   product.findByPk(id)
     .then(product => {
